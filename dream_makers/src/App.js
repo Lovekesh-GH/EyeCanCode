@@ -1,51 +1,24 @@
-import axios from 'axios';
-import './App.css';
-import React,{useState} from 'react';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./Navbar";
+import Home from "./Home";
+import Practice from "./Practice";
+import Tutorial from "./Tutorial";
+import About from "./About";
 
 function App() {
-  const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("cpp");
-  const [output, setOutput] = useState("");
-
-  const handleSubmit = async () => {
-    const payload = {
-      language,
-      code,
-    };
-    try {
-    const {data} = await axios.post("http://localhost:5000/run",payload)
-    setOutput(data.output);
-  }catch({response}){
-    if(response){
-      const errMsg = response.data.err.stderr;
-      setOutput(errMsg);
-    }else{
-      setOutput("Error Connecting to server");
-    }
-  }
-  };
   return (
-    <div className="App">
-      <h1>Compiler</h1>
-      <div>
-        <label>Language:  </label>
-      <select value={language}
-      onChange={(e) => {
-        setLanguage(e.target.value);
-        console.log(e.target.value);
-      }}>
-        <option value="c">C</option>
-        <option value="cpp">C++</option>
-        <option value="java">Java</option>
-        <option value="py">Python</option>  
-      </select>
+    <Router>
+      <div className="">
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/1" element={<Practice />} />
+          <Route path="/2" element={<Tutorial />} />
+          <Route path="/3" element={<About />} />
+        </Routes>
       </div>
-      <br />
-      <textarea rows="20" cols="75" value={code} onChange={(e) => {setCode(e.target.value);}}></textarea>
-      <br />
-      <button onClick={handleSubmit}>Submit</button>
-      <p>{output}</p>
-    </div>
+    </Router>
   );
 }
 
