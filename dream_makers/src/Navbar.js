@@ -9,9 +9,9 @@ function Navbar() {
           <li className="cursor-pointer hover:text-teal-500">
             <Link to="/">Home</Link>
           </li>
-          <li className="cursor-pointer hover:text-teal-500">
+          {/* <li className="cursor-pointer hover:text-teal-500">
             <Link to="/1">Practice</Link>
-          </li>
+          </li> */}
           <li className="cursor-pointer hover:text-teal-500">
             <Link to="/2">Tutorial</Link>
           </li>

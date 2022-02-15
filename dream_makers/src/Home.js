@@ -1,7 +1,32 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import Faq from "./Faq";
+import alanBtn from '@alan-ai/alan-sdk-web';
+// import { scroller } from 'react-scroll';
 
 function Home() {
+  const alanBtnInstance = useRef(null);
+  const [index, setIndex] = useState(null);
+  // const [currentFaqId, setCurrentFaqId] = useState(null);
+
+  
+  useEffect(() => {
+    if (!alanBtnInstance.current) {
+      alanBtnInstance.current = alanBtn({
+        key: 'fdc27e3d139b29bd95cf8dcc90a29e8d2e956eca572e1d8b807a3e2338fdd0dc/stage',
+        onCommand: commandData => {
+          if (commandData.command === 'gotoFaq') {
+            
+            setIndex(commandData.faqId - 1);
+  
+          } 
+          // else if (commandData.command === 'toggleColorMode') {
+          //   setToggleColorFlag(flag => !flag);
+          // }
+        },
+      });
+    }
+  }, []);
+
   return (
     <>
       <div className="bg-gray-900 text-black">
@@ -36,7 +61,11 @@ function Home() {
           </div>
         </div>
       </div>
-      <Faq />
+      <Faq
+        index={index}
+        setIndex={setIndex}
+      />
+      {/* <Faq /> */}
     </>
   );
 }
