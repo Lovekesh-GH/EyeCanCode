@@ -29,10 +29,10 @@ app.post("/run",async(req,res) =>{
     const filepath = await generateFile(language, code);
     let output;
     if(language === "cpp"){
-        output = await executeC(filepath);
+        output = await executeCpp(filepath);
     }
     else if(language === "c"){
-        output = await executeCpp(filepath);
+        output = await executeC(filepath);
     }
     else if(language == "java"){
         output = await executeJava(filepath);
