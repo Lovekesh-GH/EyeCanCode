@@ -19,7 +19,7 @@ app.get('/',(req,res)=> {
 
 app.post("/run",async(req,res) =>{
     // console.log(req.body);
-    const { language = "cpp",code}=req.body;
+    const { language = "python",code}=req.body;
     console.log(language,code.length);
 
     if(code === undefined){
@@ -29,10 +29,10 @@ app.post("/run",async(req,res) =>{
     const filepath = await generateFile(language, code);
     let output;
     if(language === "cpp"){
-        output = await executeC(filepath);
+        output = await executeCpp(filepath);
     }
     else if(language === "c"){
-        output = await executeCpp(filepath);
+        output = await executeC(filepath);
     }
     else if(language == "java"){
         output = await executeJava(filepath);
