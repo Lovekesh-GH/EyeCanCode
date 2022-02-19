@@ -1,15 +1,21 @@
 import axios from "axios";
 // import "./App.css";
 import stubs from "./stubs";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef,useState, useEffect } from "react";
 import alanBtn from "@alan-ai/alan-sdk-web";
+// import { unstable_HistoryRouter } from "react-router-dom";
 // import {scroller} from 'react-scroll';
+import Navbar from "./Navbar";
 
 function Tutorial() {
-  const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("cpp");
+  const [code, setCode] = useState(`print("Hello world!")`);
+  // const [coode, addCoode] = useState("");
+  const [language, setLanguage] = useState("python");
   const [output, setOutput] = useState("");
-  const notInitialRender = useRef(false);
+  const[temp,setTemp]=useState("");
+  const alanBtnInstance = useRef(null);
+  const childFunc = useRef(null);
+  // const notInitialRender = useRef(false);
   // const [voice,setVoice] =useState(null);
   // const notInitialRender = useRef(false);
 
@@ -17,19 +23,38 @@ function Tutorial() {
     setCode(stubs[language]);
   }, [language]);
 
+
   useEffect(() => {
-    const defaultLang = localStorage.getItem("default-language") || "cpp";
+    const defaultLang = localStorage.getItem("default-language") || "python";
     setLanguage(defaultLang);
   }, []);
+  // (e) => {
+  //   setCode(e.target.value);
+  // }
+  function inputChangeHandler(event){
+    event.preventDefault();
+    setCode(event.target.value);
+    setTemp(event.target.value);
 
+  }
+  function navigationHandler(value){
+    if(childFunc.current){
+      childFunc.current.handleClick(value);
+    }
+  }
   const handleSubmit = async () => {
+    console.log("abs1",code,temp);
     const payload = {
       language,
       code,
     };
+    sendData();
     try {
+      console.log(payload);
       const { data } = await axios.post("http://localhost:5000/run", payload);
+      
       setOutput(data.output);
+      console.log("abs2",code,temp);
     } catch ({ response }) {
       if (response) {
         const errMsg = response.data.err.stderr;
@@ -41,13 +66,15 @@ function Tutorial() {
   };
   function myPrintFunction(a) {
     let str = "print(\"" + a + "\")";
-    let res = setCode(str);
+    let res = setCode ((prevState)=>prevState.concat(str)
+    );
 
     return res;
   }
   function myVarFunction(a, b) {
     let str = a + "=" + b;
-    let res = setCode(str);
+    let res = setCode ((prevState)=>prevState.concat(str)
+    );
 
     return res;
   }
@@ -66,40 +93,62 @@ function Tutorial() {
       e = "=";
     }
     let str = a + " " + b + e + d + ":";
-    let res = setCode(str);
+    let res = setCode ((prevState)=>prevState.concat(str)
+    );
 
     return res;
   }
   function myFuncFunction(a, b) {
     let str = "def" + " " + a + "(" + b + ")" + ":";
-    let res = setCode(str);
+    // let res = setCode(str);
 
-    return res;
+    return setCode ((prevState)=>prevState.concat(str)
+    );
   }
   function myIncFunction(a, b) {
     let str = a + " " + "+" + "=" + " " + b;
-    let res = setCode(str);
-
+    let res = setCode ((prevState)=>prevState.concat(str)
+    );
     return res;
   }
   function myDecrFunction(a, b) {
     let str = a + " " + "-" + "=" + " " + b;
-    let res = setCode(str);
+    let res = setCode ((prevState)=>prevState.concat(str)
+    );
 
     return res;
   }
   function myListFunction(a, b, c, d) {
     let str = a + " " + "=" + " " + "[" + "\"" + b + "\"" + "," + " " + "\"" + c + "\"" + "," + " " + "\"" + d + "\"" + "]";
-    let res = setCode(str);
+    let res = setCode ((prevState)=>prevState.concat(str)
+    );
 
     return res;
   }
   function myForFunction(a, b, c) {
     let str = "for" + " " + "x" + " " + "in" + " " + "range" + "(" + a + ", " + b + ", " + c + ")" + ":";
-    let res = setCode(str);
+    let res = setCode ((prevState)=>prevState.concat(str)
+    );
 
     return res;
   }
+  function myCleatFunction(){
+    let str ="";
+    return setCode (str);
+  }
+  // function mySubmitFunction(){
+  //   // handleSubmit();   
+  //   return handleSubmit();
+  // }
+  // function handleSubmit(){
+  //   console.log("we");
+  //    }
+  // function sendData() {
+  //   alanBtnInstance.activate();
+  //   alanBtnInstance.callProjectApi("getOutput", {
+  //     value: "output"
+  //   }, function(error, result) {});
+  // };
   //   function handleSubmit() {
   //     alanBtnInstance.callProjectApi("getOutput", {Output}, function(error, result) {
   //         if (error) {
@@ -109,14 +158,31 @@ function Tutorial() {
   //         console.log(result);
   //     });
   // };
-  // alanBtnInstance.callProjectApi("setClientData", {value:"{output}"}, function (error, result){
-  //   // handle error and result here
-  // });
+  
+// 
+// var greetingWasSaid = false;
+
+// var alanBtnInstance = alanBtn({
+//   onButtonState: async function(status) {
+//     if (status === 'ONLINE') {
+//       if (!this.greetingWasSaid) {
+//         await alanBtnInstance.activate();
+//         alanBtnInstance.playText("Hello! I'm Alan. How can I help you?");
+//         this.greetingWasSaid = true
+//       }
+//     }
+//   },
+//   rootEl: document.getElementById("alan-btn"),
+// });
 
   useEffect(() => {
-    alanBtn({
+    if(!alanBtnInstance.current){
+      alanBtnInstance.current=alanBtn({
       key: "55d2c2ecfc52026c95cf8dcc90a29e8d2e956eca572e1d8b807a3e2338fdd0dc/stage",
+      
+      
       onCommand: (commandData) => {
+        console.log(code);
         if (commandData.command === "language") {
           setLanguage(commandData.language.value.toLowerCase());
 
@@ -173,26 +239,44 @@ function Tutorial() {
           console.log(one, two, three);
           myForFunction(one, two, three);
 
+        }else if(commandData.command === "goForward"){
+          navigationHandler("/About");
+          // childFunc.current();
         }
-        // else if(commandData.command === "submit"){
-        //   handleSubmit();
-        // }
+        else if(commandData.command === "goBack"){
+          navigationHandler("/");
+
+        }else if(commandData.command === "clear"){
+          myCleatFunction();
+        }
+        else if(commandData.command === "submit"){
+          //  mySubmitFunction();
+          handleSubmit();
+        }
       },
     });
+    }
   }, []);
+  // alanBtnInstance.callProjectApi("getOutput", {value: output}, function (error, result){
+  //   // handle error and result here
+  // });
+  function sendData() {
+    
+    alanBtnInstance.callProjectApi("getOutput", {output: output}, function(error, result) {});
+  };
+  
+  const setDefaultLanguage = () => {
+    localStorage.setItem("default-language", language);
+    console.log(`${language} set as default!`);
+  };
   // const callProjectApiCb = useCallback(async () => {
   //   alanBtnInstance.callProjectApi("sendAnswer", { answer: 'correct' }, (err, data) => {
   //     console.log(err, data);
   //   });
   // }, []);
-
-
-  const setDefaultLanguage = () => {
-    localStorage.setItem("default-language", language);
-    console.log(`${language} set as default!`);
-  };
   return (
     <section className="bg-stone-200 p-10">
+      <Navbar hidden="hidden" ref={childFunc}></Navbar>
       <h1 className="text-4xl py-5">Compiler</h1>
       <div>
         <label>Language: </label>
@@ -227,15 +311,15 @@ function Tutorial() {
         rows="20"
         cols="75"
         value={code}
-        onChange={(e) => {
-          setCode(e.target.value);
-        }}
+        onChange={(e)=>inputChangeHandler(e)}
         className="border-2 border-stone-800 p-5 rounded-xl"
       ></textarea>
       <br />
+      
       <button
         className="border-2 border-red-600 rounded-xl bg-red-200 hover:bg-red-500 px-3 py-1"
         onClick={handleSubmit}>
+        {/* onClick="handleSubmit"> */}
         Submit
       </button>
       <p>{output}</p>
