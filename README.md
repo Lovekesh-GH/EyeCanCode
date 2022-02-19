@@ -4,7 +4,6 @@
 ##  💼 &nbsp; <span style="color: #f2cf4a; font-family: Babas; font-size: 1.4em;">**Tagline :**</span><span style="color:#fff; font-family: 'Bebas Neue'; font-size: 1.2em;">  From voice to vision
 </span>
 
-----
 
  🛠 &nbsp;<span style="color: #f2cf4a; font-family: Babas; font-size: 1.4em;">Tech Stack
 </span>
@@ -15,7 +14,7 @@
 ![Javascipt](https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-----
+
 
 
 ## 🔭 &nbsp; <span style="color: #f2cf4a; font-family: Babas; font-size: 1.4em;">About this Project
@@ -80,7 +79,7 @@ Contributions are what make the open source community such an amazing place to b
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-----
+---
 <!-- LICENSE -->
 ## [![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE)
 
