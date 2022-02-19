@@ -20,18 +20,15 @@ const Navbar = React.forwardRef((props,ref) => {
   // }
   return (
     <>
-      <nav className={"p-4 text-stone-600 font-bold absolute grid grid-cols-1 md:grid-cols-3 w-full bg-gradient-to-r from-teal-600 to-teal-200 "+props.hidden}>
-        <ul className="text-lg space-x-8 col-span-2 flex justify-center">
-          <li className="cursor-pointer hover:text-teal-500">
+      <nav className="p-2 absolute flex justify-center w-full">
+        <ul className="font-bold text-lg space-x-2 font-sans flex justify-center bg-teal-500 rounded-full px-10 border-2 border-gray-900">
+          <li className="cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-1 transform transition duration-200 hover:scale-105">
             <Link to="/">Home</Link>
           </li>
-          {/* <li className="cursor-pointer hover:text-teal-500">
-            <Link to="/1">Practice</Link>
-          </li> */}
-          <li className="cursor-pointer hover:text-teal-500">
+          <li className="cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-1 transform transition duration-200 hover:scale-105">
             <Link to="/Tutorial">Tutorial</Link>
           </li>
-          <li className="cursor-pointer hover:text-teal-500">
+          <li className="cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-1 transform transition duration-200 hover:scale-105">
             <Link to="/About">About</Link>
           </li>
         </ul>
@@ -40,5 +37,4 @@ const Navbar = React.forwardRef((props,ref) => {
   );
 }
 )
-
 export default Navbar;

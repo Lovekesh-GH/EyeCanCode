@@ -48,7 +48,7 @@ function Tutorial() {
       language,
       code,
     };
-    sendData();
+    // sendData();
     try {
       console.log(payload);
       const { data } = await axios.post("http://localhost:5000/run", payload);
@@ -260,10 +260,10 @@ function Tutorial() {
   // alanBtnInstance.callProjectApi("getOutput", {value: output}, function (error, result){
   //   // handle error and result here
   // });
-  function sendData() {
+  // function sendData() {
     
-    alanBtnInstance.callProjectApi("getOutput", {output: output}, function(error, result) {});
-  };
+  //   alanBtnInstance.callProjectApi("getOutput", {output: output}, function(error, result) {});
+  // };
   
   const setDefaultLanguage = () => {
     localStorage.setItem("default-language", language);
@@ -275,8 +275,10 @@ function Tutorial() {
   //   });
   // }, []);
   return (
+    <div> 
+    <Navbar hidden="hidden" ref={childFunc}></Navbar>
     <section className="bg-stone-200 p-10">
-      <Navbar hidden="hidden" ref={childFunc}></Navbar>
+      
       <h1 className="text-4xl py-5">Compiler</h1>
       <div>
         <label>Language: </label>
@@ -324,6 +326,7 @@ function Tutorial() {
       </button>
       <p>{output}</p>
     </section>
+    </div>
   );
 }
 
