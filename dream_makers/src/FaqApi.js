@@ -27,6 +27,6 @@ export const questions = [
   {
     id: 6,
     ques: "Where can you give feedback?",
-    ans: "We look forward to a long journey, with you, by you, and for you. Your feedback will help us improve, mail us at ",
+    ans: "We look forward to a long journey, with you, by you, and for you. Your feedback will help us improve, mail us at 20bec022@nith.ac.in",
   },
 ];

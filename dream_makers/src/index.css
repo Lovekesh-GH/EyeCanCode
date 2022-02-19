@@ -1,10 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400&family=Lexend+Deca:wght@100;300;500&family=Poppins:wght@100;200;400;600&family=Roboto:wght@100;400;700&family=Shizuru&family=Work+Sans:wght@300;400;500&family=Yanone+Kaffeesatz:wght@300;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&family=Exo+2:wght@200;300;400&family=Lexend+Deca:wght@100;300;500&family=Poppins:wght@100;200;400;600&family=Roboto:wght@100;400;700&family=Shizuru&family=Work+Sans:wght@300;400;500&family=Yanone+Kaffeesatz:wght@300;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Balsamiq+Sans:wght@400;700&family=Exo+2:wght@200;300;400&family=Lexend+Deca:wght@100;300;500&family=Poppins:wght@100;200;400;600&family=Redressed&family=Roboto:wght@100;400;700&family=Shizuru&family=Work+Sans:wght@300;400;500&family=Yanone+Kaffeesatz:wght@300;500;700&display=swap");
 
 .bg {
-  background: url(https://c0.wallpaperflare.com/preview/71/961/288/blurred-background-coffee-cup-contemporary-creative.jpg);
+  background: url(https://media.istockphoto.com/photos/an-organised-workspace-leads-to-more-productivity-picture-id1305990690?b=1&k=20&m=1305990690&s=170667a&w=0&h=MxoLf1JAmPQOQ7YYDg_AVfA4eiK9n9OMB8o3mNNYJJM=);
   background-size: cover;
-  background-color: rgba(173, 231, 224, 0.8);
+  background-color: rgba(143, 197, 197, 0.8);
   background-blend-mode: overlay;
 }
