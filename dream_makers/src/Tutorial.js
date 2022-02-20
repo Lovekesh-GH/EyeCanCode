@@ -8,7 +8,7 @@ import alanBtn from "@alan-ai/alan-sdk-web";
 import Navbar from "./Navbar";
 
 function Tutorial() {
-  const [code, setCode] = useState(`print("Hello world!")`);
+  const [code, setCode] = useState(`list = ["apple", "banana", "cherry"]\nprint(list)`);
   // const [coode, addCoode] = useState("");
   const [language, setLanguage] = useState("python");
   const [output, setOutput] = useState("");
@@ -332,12 +332,12 @@ function Tutorial() {
             Submit
           </button>
         </div>
-        <textarea
+        <p
           className="border-2 border-gray-200 h-36 lg:w-[50vw] w-full rounded-xl p-2"
           placeholder="Output"
         >
           {output}
-        </textarea>
+        </p>
       </section>
     </div>
   );
