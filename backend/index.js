@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require("cors");
+const port = 5000 || process.env.PORT;
 const {generateFile} = require('./generateFile');
 const {executeCpp} = require("./executeCpp");
 const {executePy} = require('./executePy');
@@ -46,6 +47,6 @@ app.post("/run",async(req,res) =>{
 }}
 );
 
-app.listen(5000,()=>{
+app.listen(port,()=>{
     console.log(`Listening on port 5000!`);
 });
