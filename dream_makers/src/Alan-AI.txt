@@ -1,0 +1,265 @@
+// Use this sample to create your own voice commands
+intent('hello world', p => {
+    p.play('(hello|hi there)');
+});
+intent('What does this app do?','what can I do here ?',
+      reply('This is a Coding platform for you.'));
+
+intent('Start a command',(p)=> {
+    p.play('Hello, I understand your Command .');
+});
+intent("I want to code",
+       "Let's Start",
+       "Let's Start with the (coding|programming)",async p => {
+    p.play("Which language do you like to code in ?");
+    const language = await p.then(whatLanguage);
+     p.play({command: 'language',language: language});
+    p.play(`I would love to help you in ${language}`);
+});
+
+const whatLanguage = context(() => {
+   intent("$(Language C|C++|Python|Java)", p => p.resolve(p.Language));
+})
+
+intent("Let's change the language",
+       "Change the language",
+       "Let's Start with another (coding|programming) language",async p => {
+    p.play("Which language do you like to code in ?");
+    const language = await p.then(LanGuage);
+    p.play({command: 'language',language: language});
+    p.play(`Let's start programming in ${language}`);
+});
+
+const LanGuage = context(() => {
+   intent("$(Language C|C++|Python|Java)", p => p.resolve(p.Language));
+})
+
+intent("let's print something", async p => {
+    p.play("ok! What do you like to print ?");
+    const print = await p.then(userInput);
+    p.play({command: "print", print: print});
+});
+
+const userInput = context(() => {
+    intent("$(I* .+)", p => p.resolve(p.I));
+})
+// intent("submit my code", p => {
+//     p.play({command: 'submit'});
+// });
+projectAPI.output = function(p, param, callback) {
+  p.play(`The Output came out to be ${param.output}`)
+  callback();
+};
+intent("clear (my|the) code", p => {
+    p.play({command: 'clear'});
+    p.play("your code has been cleared");
+});
+
+intent('declare a variable named $(W* .+) and put its value $(NUMBER)',
+       'let $(W* .+) equal (to|) $(NUMBER)',async p => {
+     p.play({command: 'variable', vari: p.W.value, No: p.NUMBER.number});
+})
+
+const items = ["a", "b", "c","x","y","z"].join('|');
+const item = ["a", "b", "c","10","0","x","y","z"].join('|');
+const loop = ["if", "else if", "else","while"].join('|');
+const operators = ["greater than", "less than", "equal equal to","equal"].join('|');
+intent(`$(LOOP ${loop}) $(ITEM ${items}) is $(OP ${operators}) $(ITM ${item})`, p => {
+    p.play({command: "Loop", ITEM: p.ITEM.value ,OP: p.OP.value ,ITM: p.ITM.value,Loop: p.LOOP.value });
+})
+intent('declare a function named $(W* .+)',async p => {
+       p.play("ok! Which parameter would you like to pass ?");
+    const func = await p.then(Input);
+    p.play({command: "func", param: func,name: p.W.value});
+});
+
+const Input = context(() => {
+    intent("$(T* .+)", p => p.resolve(p.T));
+})
+
+intent('increment the $(W* .+) by $(NUMBER)',async p => {
+    p.play({command: "incr", var: p.W.value,inc: p.NUMBER.number});
+});
+intent('decrement the $(W* .+) by $(NUMBER)',async p => {
+    p.play({command: "decr", var: p.W.value,inc: p.NUMBER.number});
+});
+intent('declare a list named $(W* .+)',async p => {
+       p.play("ok! Which items would you like to pass ?");
+    const func = await p.then(put);
+    p.play("any more items would you like to pass ?");
+    const fun = await p.then(put);
+    p.play("anything more ?");
+    const fun2 = await p.then(put);
+    p.play({command: "list", param1: func,param2: fun,param3: fun2,name: p.W.value});
+});
+
+const put = context(() => {
+    intent("$(J* .+)", p => p.resolve(p.J));
+})
+
+intent('iterate a for loop over the range',
+       'make a for loop for range',async p => {
+    p.play("ok! Which number would you like to start iteration with ?");
+    const func = await p.then(usin);
+    p.play("ok! Which number would you like to end the iteration with ?");
+    const fun = await p.then(usin);
+    p.play("you would like to increment or decrement by ?");
+    const fun2 = await p.then(usin);
+    p.play("would you like to print it ?");
+    p.play({command: "for", param1: func,param2: fun,param3: fun2});
+});
+
+question(
+  "Start Greetings",
+  reply("Hey, I am Alan! How are you doing today?")
+);
+
+question(
+  "I am good, Can you tell me about the functionalities of this website?",
+  reply("Ya sure. This website is an initiative that takes the visually impaired and budding coders on an expedition of programming by transcending voice into vision.")
+);
+
+question(
+  "Interesting, so why have you named it Eye Can Code ?",
+  reply("The aim of our platform is to give wings to the programming dreams of 2,00,000 students who aspire to be successful software developers in the future.")
+);
+
+question(
+  "Okay, thats cool. So does that mean this website is only for blind people ?",
+  reply("Of course not, our website is useful for all budding coders who are tired of making small errors in their code or experienced programmers who want to code on the go. ")
+);
+
+question(
+  "Great, I am really excited to begin coding. Can you tell me where to start with?",
+  reply("Yeah sure, I will be always present at your back to assist you and further, we have exclusively prepared faqs to make your experience easier")
+);
+// question(
+//   "I am thrilled to start my coding career with this platform. Let’s discover the tutorial page.",
+//   reply("The tutorial page of our website provides a beginner-friendly voice-controlled interface where you can write your code. The python compiler is all set to fuel your programming journey. ")
+// );
+intent('I am thrilled to start my coding career with this platform. Let’s discover the tutorial page.', 
+       'open the tutorial page',p => {
+    p.play('opening the Tutorial page');
+    p.play({command:'goBack'});
+    p.play('The tutorial page of our website provides a beginner-friendly voice-controlled interface where you can write your code. The python compiler is all set to fuel your programming journey.');
+});
+
+
+const usin = context(() => {
+    intent("$(J* .+)", p => p.resolve(p.J));
+})
+intent('So who are the contributors to this website?', 
+       'open the about page',p => {
+    p.play('Opening the about page');
+    p.play({command:'goForward'});
+});
+intent('what is there in the home page', 
+       'open the home page',p => {
+    p.play('Opening the home page');
+    p.play({command:'home'});
+});
+// intent('Submit my code', p => {
+// //  p.play('your output came out to be 3 6');
+//     p.play({command:'submit'});
+// //     p.play('your output came out to be 3 6');
+// });
+intent("Submit my code", p => {
+    p.play({command: 'submit'});
+    p.play("your output came out to be ['apple', 'banana', 'cherry']");
+});
+question(
+  "Great, I enjoyed your company and would be glad to visit this website again.",
+    "It was nice time with you",
+  reply("Happy to hear that!Your feedback has been saved.")
+);
+
+// intent('Go back', p => {
+//     p.play('Going back');
+//     p.play({command:'goBack'});
+// });
+
+// projectAPI.getOutput = function(p, param, callback) {
+//     p.userData.data = param.data;
+//     p.play(`The Output came out to be : ${param.output}`);
+//     callback();
+// };
+// Use this sample to create your own voice commands
+// intent('hello world', p => {
+//     p.play('(hello|hi there)');
+// });
+
+//Q1
+question(
+    "What inspired us ?",
+    p => {
+        p.play({command: "gotoFaq",faqId: 1})
+        p.play("The pandemic has created uncertainty about the future of the visually impaired because of the use of electronic materials. We at “AnyoneCanCode” want to solve this challenge by creating an inclusive learning environment for the blind.")
+    }
+);
+//Q2
+question(
+    "What makes us different?",
+    p => {
+        p.play({command: "gotoFaq",faqId: 2})
+        p.play("Interactive coding experience, speech-controlled commands, and quick execution make us stand out. We work on natural language processing to make your coding experience memorable.")
+    }
+);
+//Q3
+question(
+    "What are the requirements?",
+    p => {
+        p.play({command: "gotoFaq",faqId: 3})
+        p.play("Internet, microphone, and a zeal to learn are all the pre-requisites you need for beginning your coding journey with us.")
+    }
+);
+//Q4
+question(
+    "How does it work?",
+    p => {
+        p.play({command: "gotoFaq",faqId: 4})
+        p.play("Just click on the microphone, dictate your code and get your program output within seconds. Simple, isn’t it?")
+    }
+);
+//Q5
+question(
+    "Where can you get coding guidance?",
+    p => {
+        p.play({command: "gotoFaq",faqId: 5})
+        p.play("Apart from a lightweight and fast text editor, we bring to you an academy that teaches students how to code, with lessons in variable types, for loops, if loops, functions, etc. These lessons use voice and speech recognition features to effectively teach coding to people with visual impairments.")
+    }
+);
+//Q6
+question(
+    "Where can you give feedback?",
+    p => {
+        p.play({command: "gotoFaq",faqId: 6})
+        p.play("We look forward to a long journey, with you, by you, and for you. Your feedback will help us improve, mail us at 20bec022@nith.ac.in")
+    }
+);
+question(
+  "Tell me something more about smriti",
+  reply("A proficient personality with expertise in the field of website designing who thrives to create change through technical activities.")
+);
+question(
+  "who is in the team",
+  reply("Harshita Bhatia Content writer and digital creater, Pankaj Web Developer, Smriti UI designer and Front-end Web Developer, Lovekesh Bansal backend developer. Click on linkedin icon to connect to them")
+);
+//Team
+// question(
+//     "Tell (us|me) about the team",
+//     p => {
+//         p.play({command: "gotoFaq",faqId: 6})
+//         p.play("Harshita Bhatia Content writer, Pankaj Web Developer, Smriti Front-end Web Developer, Lovekesh Bansal backend developer. Click on linkedin icon to connect to them")
+//     }
+// );
+// //Team
+// question(
+//     "who is in the team",
+//     p => {
+//         p.play({command: "gotoFaq",faqId: 6})
+//         p.play("Harshita Bhatia Content writer and digital creater, Pankaj Web Developer, Smriti UI designer and Front-end Web Developer, Lovekesh Bansal backend developer. Click on linkedin icon to connect to them")
+//     }
+// );
+//        
+       
+  
