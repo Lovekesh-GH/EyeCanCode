@@ -7,7 +7,6 @@ const COMMANDS = {
 
 export default function Alan({ alanvoice, setAlanVoice, toggle, setShow }) {
   const [alanInstance, setAlanInstance] = useState();
-  //   const { setShow } = toggle();
   console.log(alanvoice);
 
   const openQues = useCallback(() => {

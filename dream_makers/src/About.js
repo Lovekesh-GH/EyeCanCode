@@ -12,17 +12,12 @@ function About() {
       alanBtnInstance.current = alanBtn({
         key: "55d2c2ecfc52026c95cf8dcc90a29e8d2e956eca572e1d8b807a3e2338fdd0dc/stage",
         onCommand: (commandData) => {
-          if (commandData.command === "gotoFaq") {
-            // setIndex(commandData.faqId - 1);
-          } else if (commandData.command === "goForward") {
+          if (commandData.command === "goForward") {
             navigationHandler("/");
             // childFunc.current();
           } else if (commandData.command === "goBack") {
             navigationHandler("/Tutorial");
           }
-          // else if (commandData.command === 'toggleColorMode') {
-          //   setToggleColorFlag(flag => !flag);
-          // }
         },
       });
     }

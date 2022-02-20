@@ -3,40 +3,9 @@ import Faq from "./Faq";
 import Navbar from './Navbar';
 import alanBtn from '@alan-ai/alan-sdk-web';
 
-// import { scroller } from 'react-scroll';
-
 function Home() {
-  // const alanBtnInstance = useRef(null);
   const [index, setIndex] = useState(null);
   const childFunc = useRef(null);
-  // const alanBtnInstance = useRef(null);
-  // const [currentFaqId, setCurrentFaqId] = useState(null);
-
-  
-  // useEffect(() => {
-  //   if (!alanBtnInstance.current) {
-  //     alanBtnInstance.current = alanBtn({
-  //       key: '55d2c2ecfc52026c95cf8dcc90a29e8d2e956eca572e1d8b807a3e2338fdd0dc/stage',
-  //       onCommand: commandData => {
-  //         if (commandData.command === 'gotoFaq') {
-            
-  //           setIndex(commandData.faqId - 1);
-  
-  //         }else if(commandData.command === "goForward"){
-  //           navigationHandler("/About");
-  //           // childFunc.current();
-  //         }
-  //         else if(commandData.command === "goBack"){
-  //           navigationHandler("/Tutorial");
-  
-  //         }
-  //         // else if (commandData.command === 'toggleColorMode') {
-  //         //   setToggleColorFlag(flag => !flag);
-  //         // }
-  //       },
-  //     });
-  //   }
-  // }, []);
 
   function navigationHandler(value){
     if(childFunc.current){

@@ -4,9 +4,6 @@ import { useEffect } from "react";
 
 
 const Navbar = React.forwardRef((props,ref) => {
-  // useEffect(()=>{
-  //   childFunc.current = handleClick;
-  // },[])
   const history = useNavigate();
   React.useImperativeHandle(ref,()=>({
     handleClick(value){
@@ -14,10 +11,6 @@ const Navbar = React.forwardRef((props,ref) => {
   },
   }))
 
-  
-  // function handleClick(){
-  //     history("/3",{replace:true})
-  // }
   return (
     <>
       <nav className="p-2 absolute flex justify-center w-full">

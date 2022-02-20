@@ -19,7 +19,6 @@ app.get('/',(req,res)=> {
 });
 
 app.post("/run",async(req,res) =>{
-    // console.log(req.body);
     const { language = "python",code}=req.body;
     console.log(language,code.length);
 

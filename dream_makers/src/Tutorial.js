@@ -1,23 +1,16 @@
 import axios from "axios";
-// import "./App.css";
 import stubs from "./stubs";
 import React, { useRef, useState, useEffect } from "react";
 import alanBtn from "@alan-ai/alan-sdk-web";
-// import { unstable_HistoryRouter } from "react-router-dom";
-// import {scroller} from 'react-scroll';
 import Navbar from "./Navbar";
 
 function Tutorial() {
   const [code, setCode] = useState(`list = ["apple", "banana", "cherry"]\nprint(list)`);
-  // const [coode, addCoode] = useState("");
   const [language, setLanguage] = useState("python");
   const [output, setOutput] = useState("");
   const [temp, setTemp] = useState("");
   const alanBtnInstance = useRef(null);
   const childFunc = useRef(null);
-  // const notInitialRender = useRef(false);
-  // const [voice,setVoice] =useState(null);
-  // const notInitialRender = useRef(false);
 
   useEffect(() => {
     setCode(stubs[language]);
@@ -27,9 +20,7 @@ function Tutorial() {
     const defaultLang = localStorage.getItem("default-language") || "python";
     setLanguage(defaultLang);
   }, []);
-  // (e) => {
-  //   setCode(e.target.value);
-  // }
+
   function inputChangeHandler(event) {
     event.preventDefault();
     setCode(event.target.value);
@@ -46,10 +37,10 @@ function Tutorial() {
       language,
       code,
     };
-    // sendData();
+  
     try {
       console.log(payload);
-      const { data } = await axios.post("http://localhost:5000/run", payload);
+      const { data } = await axios.post("https://dream-maker.herokuapp.com/run", payload);
 
       setOutput(data.output);
       console.log("abs2", code, temp);
@@ -92,7 +83,6 @@ function Tutorial() {
   }
   function myFuncFunction(a, b) {
     let str = "def" + " " + a + "(" + b + ")" + ":";
-    // let res = setCode(str);
 
     return setCode((prevState) => prevState.concat(str));
   }
@@ -157,44 +147,6 @@ function Tutorial() {
     let str = "";
     return setCode(str);
   }
-  // function mySubmitFunction(){
-  //   // handleSubmit();
-  //   return handleSubmit();
-  // }
-  // function handleSubmit(){
-  //   console.log("we");
-  //    }
-  // function sendData() {
-  //   alanBtnInstance.activate();
-  //   alanBtnInstance.callProjectApi("getOutput", {
-  //     value: "output"
-  //   }, function(error, result) {});
-  // };
-  //   function handleSubmit() {
-  //     alanBtnInstance.callProjectApi("getOutput", {Output}, function(error, result) {
-  //         if (error) {
-  //             console.error(error);
-  //             return;
-  //         }
-  //         console.log(result);
-  //     });
-  // };
-
-  //
-  // var greetingWasSaid = false;
-
-  // var alanBtnInstance = alanBtn({
-  //   onButtonState: async function(status) {
-  //     if (status === 'ONLINE') {
-  //       if (!this.greetingWasSaid) {
-  //         await alanBtnInstance.activate();
-  //         alanBtnInstance.playText("Hello! I'm Alan. How can I help you?");
-  //         this.greetingWasSaid = true
-  //       }
-  //     }
-  //   },
-  //   rootEl: document.getElementById("alan-btn"),
-  // });
 
   useEffect(() => {
     if (!alanBtnInstance.current) {
@@ -265,23 +217,12 @@ function Tutorial() {
       });
     }
   }, []);
-  // alanBtnInstance.callProjectApi("getOutput", {value: output}, function (error, result){
-  //   // handle error and result here
-  // });
-  // function sendData() {
-
-  //   alanBtnInstance.callProjectApi("getOutput", {output: output}, function(error, result) {});
-  // };
-
+  
   const setDefaultLanguage = () => {
     localStorage.setItem("default-language", language);
     console.log(`${language} set as default!`);
   };
-  // const callProjectApiCb = useCallback(async () => {
-  //   alanBtnInstance.callProjectApi("sendAnswer", { answer: 'correct' }, (err, data) => {
-  //     console.log(err, data);
-  //   });
-  // }, []);
+  
   return (
     <div>
       <Navbar hidden="hidden" ref={childFunc}></Navbar>
