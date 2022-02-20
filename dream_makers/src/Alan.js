@@ -27,7 +27,7 @@ export default function Alan({ alanvoice, setAlanVoice, toggle, setShow }) {
       alanBtn({
         bottom: "10px",
         right: "5px",
-        key: "4dc6ce8b86664969d2775e720c392f1c2e956eca572e1d8b807a3e2338fdd0dc/stage",
+        key: "55d2c2ecfc52026c95cf8dcc90a29e8d2e956eca572e1d8b807a3e2338fdd0dc/stage",
         onCommand: (commandData) => {
           if (commandData.command === "gotoFaq") {
             toggle(commandData.faqId - 1);

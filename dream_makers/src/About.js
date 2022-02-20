@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Navbar from './Navbar';
-import alanBtn from '@alan-ai/alan-sdk-web';
+import React, { useState, useEffect, useRef } from "react";
+import Navbar from "./Navbar";
+import alanBtn from "@alan-ai/alan-sdk-web";
 import { team } from "./TeamData";
 import "./Cards.css";
-
 
 function About() {
   const childFunc = useRef(null);
@@ -11,19 +10,15 @@ function About() {
   useEffect(() => {
     if (!alanBtnInstance.current) {
       alanBtnInstance.current = alanBtn({
-        key: '55d2c2ecfc52026c95cf8dcc90a29e8d2e956eca572e1d8b807a3e2338fdd0dc/stage',
-        onCommand: commandData => {
-          if (commandData.command === 'gotoFaq') {
-            
+        key: "55d2c2ecfc52026c95cf8dcc90a29e8d2e956eca572e1d8b807a3e2338fdd0dc/stage",
+        onCommand: (commandData) => {
+          if (commandData.command === "gotoFaq") {
             // setIndex(commandData.faqId - 1);
-  
-          }else if(commandData.command === "goForward"){
+          } else if (commandData.command === "goForward") {
             navigationHandler("/");
             // childFunc.current();
-          }
-          else if(commandData.command === "goBack"){
+          } else if (commandData.command === "goBack") {
             navigationHandler("/Tutorial");
-  
           }
           // else if (commandData.command === 'toggleColorMode') {
           //   setToggleColorFlag(flag => !flag);
@@ -33,8 +28,8 @@ function About() {
     }
   }, []);
 
-  function navigationHandler(value){
-    if(childFunc.current){
+  function navigationHandler(value) {
+    if (childFunc.current) {
       childFunc.current.handleClick(value);
     }
   }
@@ -51,9 +46,9 @@ function About() {
               return (
                 <div key={item.id}>
                   <div className="border border-gray-800 shadow-lg shadow-black">
-                    <div class="container">
-                      <div class="content-inner">
-                        <div class="content-front border-b border-gray-800">
+                    <div className="container">
+                      <div className="content-inner">
+                        <div className="content-front border-b border-gray-800">
                           <img
                             src={item.avatar}
                             className="object-cover w-full h-72"
@@ -68,8 +63,8 @@ function About() {
                           </div>
                         </div>
 
-                        <div class="content-back">
-                          <div class="dec-icon"></div>
+                        <div className="content-back">
+                          <div className="dec-icon"></div>
                           <p className="text-lg p-5 text-justify">
                             {item.description}
                           </p>
