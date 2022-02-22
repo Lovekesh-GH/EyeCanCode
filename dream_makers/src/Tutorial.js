@@ -4,21 +4,21 @@ import React, { useState, useEffect,useRef } from "react";
 import stubs from "./stubs";
 
 const Tutorial=React.forwardRef((props,ref)=> {
-  const [code, setCode] = useState(``);
+  const [code, setCode] = useState(null);
   const [language, setLanguage] = useState("");
   const [output, setOutput] = useState("");
 //  custom hook to prevent useEffect;s initial render:
-  // const useDidMountEffect = (func, deps) => {
-  //   const didMount = useRef(false);
+  const useDidMountEffect = (func, deps) => {
+    const didMount = useRef(false);
   
-  //   useEffect(() => {
-  //     if (didMount.current) {
-  //       func();
-  //     } else {
-  //       didMount.current = true;
-  //     }
-  //   }, deps);
-  // };
+    useEffect(() => {
+      if (didMount.current) {
+        func();
+      } else {
+        didMount.current = true;
+      }
+    }, deps);
+  };
 
   useEffect(() => {
     setCode(stubs[language]);
@@ -34,32 +34,59 @@ const Tutorial=React.forwardRef((props,ref)=> {
     }`)
   }, []);
 
-  async function submitHandler(){
-    console.log("abs1", code);
-      const payload = {
-        language,
-        code,
-      };
+  // async function submitHandler(){
+  //   console.log("abs1", code);
+  //     const payload = {
+  //       language,
+  //       code,
+  //     };
     
-      try {
-        console.log(payload);
-        const { data } = await axios.post("http://localhost:5000/run", payload);
+  //     try {
+  //       console.log(payload);
+  //       const { data } = await axios.post("http://localhost:5000/run", payload);
         
-        setOutput(data.output);
-        console.log("abs2", code);
-      } catch ({ response }) {
-        if (response) {
-          const errMsg = response.data.err.stderr;
-          setOutput(errMsg);
-        } else {
-          setOutput("Error Connecting to server");
-        }
-      }
-  }
+  //       setOutput(data.output);
+  //       console.log("abs2", code);
+  //     } catch ({ response }) {
+  //       if (response) {
+  //         const errMsg = response.data.err.stderr;
+  //         setOutput(errMsg);
+  //       } else {
+  //         setOutput("Error Connecting to server");
+  //       }
+  //     }
+  // }
+  const submitHandler = async () => {
+    let postTokenoptions = {
+      method: "POST",
+      url: "https://judge0-ce.p.rapidapi.com/submissions",
+      params: { base64_encoded: "false", fields: "*", wait: true },
+      headers: {
+        "content-type": "application/json",
+        "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+        "x-rapidapi-key": "078ccedceemsh7c7f7228a49c5b1p17ab36jsnaf56639a0967",
+      },
+      data: {
+        language_id: 71,
+        source_code: code,
+        // source_code: "print('Hello World')",
+        stdin: null,
+      },
+    };
+
+    try {
+      const response = await axios.request(postTokenoptions);
+
+      setOutput(response.data.stdout);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   //  code for sending data 
-  //  useDidMountEffect(() => {
-  //    props.sendFunc(output);
-  //  },[output]);
+   useDidMountEffect(() => {
+     props.sendFunc(output);
+   },[output]);
 
   React.useImperativeHandle(ref,()=>({
     languageHandler(commandData){
@@ -227,12 +254,14 @@ const Tutorial=React.forwardRef((props,ref)=> {
             Submit
           </button>
         </div>
-        <p
+        <textarea
           className="border-2 border-gray-200 h-36 lg:w-[50vw] w-full rounded-xl p-2"
           placeholder="Output"
+          value={output}
+         
         >
-          {output}
-        </p>
+          
+ </textarea>
         
       </section>
     </div>

@@ -103,6 +103,7 @@ function App() {
             //  mySubmitFunction();
             if (tutFunc.current) {
               tutFunc.current.handleSubmit();
+              sendData();
             }
           }
         },
@@ -110,12 +111,13 @@ function App() {
     }
   }, []);
 
-function sendData() {
+function sendData(output) {
     alanBtnInstance.current.activate();
     alanBtnInstance.current.callProjectApi("getOutput", {
-      output:"hello"
+      output
     }, function(error, result) {
       console.log(result);
+      console.log("received")
     });
     console.log("SENT");
   };
