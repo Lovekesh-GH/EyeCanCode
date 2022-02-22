@@ -35,12 +35,12 @@ function Faq() {
                         {show === index ? (
                           <img
                             src="https://img.icons8.com/ios/50/000000/minus.png"
-                            className="h-10 p-2"
+                            className="h-10 p-2" alt="minus"
                           />
                         ) : (
                           <img
                             src="https://img.icons8.com/ios/50/000000/plus--v1.png"
-                            className="h-10 p-2"
+                            className="h-10 p-2" alt="plus"
                           />
                         )}{" "}
                         <p className="p-1 text-left font-medium font-sans">
@@ -63,12 +63,12 @@ function Faq() {
           })}
         </div>
       </section>
-      <Alan
+      {/* <Alan
         alanvoice={alanvoice}
         setAlanVoice={setAlanVoice}
         toggle={toggle}
         setShow={setShow}
-      />
+      /> */}
     </div>
   );
 }

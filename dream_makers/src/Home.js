@@ -1,17 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Faq from "./Faq";
 import Navbar from './Navbar';
-import alanBtn from '@alan-ai/alan-sdk-web';
 
 function Home() {
-  const [index, setIndex] = useState(null);
   const childFunc = useRef(null);
-
-  function navigationHandler(value){
-    if(childFunc.current){
-      childFunc.current.handleClick(value);
-    }
-  }
 
   return (
     <>
@@ -21,7 +13,7 @@ function Home() {
           <div className="col-span-2 grid items-center h-screen">
             <div className="">
               <div className="flex justify-center">
-                <img src="/digital-png.png" className="h-40 sm:h-52" />
+                <img src="/digital-png.png" className="h-40 sm:h-52" alt="digital"/>
               </div>
               <div className="flex justify-center text-teal-500">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl p-5 font-anton">

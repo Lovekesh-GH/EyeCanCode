@@ -1,231 +1,185 @@
+/* eslint-disable eqeqeq */
 import axios from "axios";
+import React, { useState, useEffect,useRef } from "react";
 import stubs from "./stubs";
-import React, { useRef, useState, useEffect } from "react";
-import alanBtn from "@alan-ai/alan-sdk-web";
-import Navbar from "./Navbar";
 
-function Tutorial() {
-  const [code, setCode] = useState(`list = ["apple", "banana", "cherry"]\nprint(list)`);
-  const [language, setLanguage] = useState("python");
+const Tutorial=React.forwardRef((props,ref)=> {
+  const [code, setCode] = useState(``);
+  const [language, setLanguage] = useState("");
   const [output, setOutput] = useState("");
-  const [temp, setTemp] = useState("");
-  const alanBtnInstance = useRef(null);
-  const childFunc = useRef(null);
+//  custom hook to prevent useEffect;s initial render:
+  // const useDidMountEffect = (func, deps) => {
+  //   const didMount = useRef(false);
+  
+  //   useEffect(() => {
+  //     if (didMount.current) {
+  //       func();
+  //     } else {
+  //       didMount.current = true;
+  //     }
+  //   }, deps);
+  // };
 
   useEffect(() => {
     setCode(stubs[language]);
   }, [language]);
 
   useEffect(() => {
-    const defaultLang = localStorage.getItem("default-language") || "python";
+    const defaultLang = localStorage.getItem("default-language") || "c";
     setLanguage(defaultLang);
+    setCode(`#include <stdio.h>
+    int main() {
+      printf("Hello World!");
+      return 0;
+    }`)
   }, []);
 
-  function inputChangeHandler(event) {
-    event.preventDefault();
-    setCode(event.target.value);
-    setTemp(event.target.value);
-  }
-  function navigationHandler(value) {
-    if (childFunc.current) {
-      childFunc.current.handleClick(value);
-    }
-  }
-  const handleSubmit = async () => {
-    console.log("abs1", code, temp);
-    const payload = {
-      language,
-      code,
-    };
-  
-    try {
-      console.log(payload);
-      const { data } = await axios.post("https://dream-maker.herokuapp.com/run", payload);
-
-      setOutput(data.output);
-      console.log("abs2", code, temp);
-    } catch ({ response }) {
-      if (response) {
-        const errMsg = response.data.err.stderr;
-        setOutput(errMsg);
-      } else {
-        setOutput("Error Connecting to server");
+  async function submitHandler(){
+    console.log("abs1", code);
+      const payload = {
+        language,
+        code,
+      };
+    
+      try {
+        console.log(payload);
+        const { data } = await axios.post("http://localhost:5000/run", payload);
+        
+        setOutput(data.output);
+        console.log("abs2", code);
+      } catch ({ response }) {
+        if (response) {
+          const errMsg = response.data.err.stderr;
+          setOutput(errMsg);
+        } else {
+          setOutput("Error Connecting to server");
+        }
       }
-    }
-  };
-  function myPrintFunction(a) {
-    let str = 'print("' + a + '")';
-    let res = setCode((prevState) => prevState.concat(str));
-
-    return res;
   }
-  function myVarFunction(a, b) {
-    let str = a + "=" + b;
-    let res = setCode((prevState) => prevState.concat(str));
+  //  code for sending data 
+  //  useDidMountEffect(() => {
+  //    props.sendFunc(output);
+  //  },[output]);
 
-    return res;
-  }
-  function myLoopFunction(a, b, c, d) {
-    let e;
-    if (c == "greater than") {
-      e = ">";
-    } else if (c == "less than") {
-      e = "<";
-    } else if (c == "equal equal to") {
-      e = "==";
-    } else if (c == "equal") {
-      e = "=";
-    }
-    let str = a + " " + b + e + d + ":";
-    let res = setCode((prevState) => prevState.concat(str));
-
-    return res;
-  }
-  function myFuncFunction(a, b) {
-    let str = "def" + " " + a + "(" + b + ")" + ":";
-
-    return setCode((prevState) => prevState.concat(str));
-  }
-  function myIncFunction(a, b) {
-    let str = a + " " + "+" + "=" + " " + b;
-    let res = setCode((prevState) => prevState.concat(str));
-    return res;
-  }
-  function myDecrFunction(a, b) {
-    let str = a + " " + "-" + "=" + " " + b;
-    let res = setCode((prevState) => prevState.concat(str));
-
-    return res;
-  }
-  function myListFunction(a, b, c, d) {
-    let str =
-      a +
-      " " +
-      "=" +
-      " " +
-      "[" +
-      '"' +
-      b +
-      '"' +
-      "," +
-      " " +
-      '"' +
-      c +
-      '"' +
-      "," +
-      " " +
-      '"' +
-      d +
-      '"' +
-      "]";
-    let res = setCode((prevState) => prevState.concat(str));
-
-    return res;
-  }
-  function myForFunction(a, b, c) {
-    let str =
-      "for" +
-      " " +
-      "x" +
-      " " +
-      "in" +
-      " " +
-      "range" +
-      "(" +
-      a +
-      ", " +
-      b +
-      ", " +
-      c +
-      ")" +
-      ":";
-    let res = setCode((prevState) => prevState.concat(str));
-
-    return res;
-  }
-  function myCleatFunction() {
-    let str = "";
-    return setCode(str);
-  }
-
-  useEffect(() => {
-    if (!alanBtnInstance.current) {
-      alanBtnInstance.current = alanBtn({
-        key: "55d2c2ecfc52026c95cf8dcc90a29e8d2e956eca572e1d8b807a3e2338fdd0dc/stage",
-
-        onCommand: (commandData) => {
-          console.log(code);
-          if (commandData.command === "language") {
-            setLanguage(commandData.language.value.toLowerCase());
-          } else if (commandData.command === "print") {
-            let response = commandData.print.value.toLowerCase();
-            console.log(response);
-            myPrintFunction(response);
-          } else if (commandData.command === "variable") {
-            let one = commandData.vari;
-            let two = commandData.No;
-            console.log(one);
-            console.log(two);
-            myVarFunction(one, two);
-          } else if (commandData.command === "Loop") {
-            let one = commandData.ITEM;
-            let two = commandData.ITM;
-            let op = commandData.OP;
-            let type = commandData.Loop;
-            console.log(one, two, op, type);
-            myLoopFunction(type, one, op, two);
-          } else if (commandData.command === "func") {
-            let param = commandData.param.value.toLowerCase();
-            let funcN = commandData.name;
-            console.log(param, funcN);
-            myFuncFunction(funcN, param);
-          } else if (commandData.command === "incr") {
-            let vari = commandData.var;
-            let inc = commandData.inc;
-            console.log(vari, inc);
-            myIncFunction(vari, inc);
-          } else if (commandData.command === "decr") {
-            let vari = commandData.var;
-            let inc = commandData.inc;
-            console.log(vari, inc);
-            myDecrFunction(vari, inc);
-          } else if (commandData.command === "list") {
-            let name = commandData.name;
-            let one = commandData.param1.value.toLowerCase();
-            let two = commandData.param2.value.toLowerCase();
-            let three = commandData.param3.value.toLowerCase();
-            console.log(name, one, two, three);
-            myListFunction(name, one, two, three);
-          } else if (commandData.command === "for") {
-            let one = commandData.param1.value.toLowerCase();
-            let two = commandData.param2.value.toLowerCase();
-            let three = commandData.param3.value.toLowerCase();
-            console.log(one, two, three);
-            myForFunction(one, two, three);
-          } else if (commandData.command === "goForward") {
-            navigationHandler("/About");
-            // childFunc.current();
-          } else if (commandData.command === "goBack") {
-            navigationHandler("/");
-          } else if (commandData.command === "clear") {
-            myCleatFunction();
-          } else if (commandData.command === "submit") {
-            //  mySubmitFunction();
-            handleSubmit();
-          }
-        },
-      });
-    }
-  }, []);
+  React.useImperativeHandle(ref,()=>({
+    languageHandler(commandData){
+      setLanguage(commandData.language.value.toLowerCase());
+    },
+    handleSubmit(){
+      submitHandler();
+    },
+    myCleatFunction() {
+      let str = "";
+      return setCode(str);
+    },
+    myForFunction(a, b, c) {
+      let str =
+        "for" +
+        " " +
+        "x" +
+        " " +
+        "in" +
+        " " +
+        "range" +
+        "(" +
+        a +
+        ", " +
+        b +
+        ", " +
+        c +
+        ")" +
+        ":";
+      let res = setCode((prevState) => prevState.concat(str));
   
-  const setDefaultLanguage = () => {
+      return res;
+    },
+    myListFunction(a, b, c, d) {
+      let str =
+        a +
+        " " +
+        "=" +
+        " " +
+        "[" +
+        '"' +
+        b +
+        '"' +
+        "," +
+        " " +
+        '"' +
+        c +
+        '"' +
+        "," +
+        " " +
+        '"' +
+        d +
+        '"' +
+        "]";
+      let res = setCode((prevState) => prevState.concat(str));
+  
+      return res;
+    },
+    myDecrFunction(a, b) {
+      // eslint-disable-next-line no-useless-concat
+      let str = a + " " + "-" + "=" + " " + b;
+      let res = setCode((prevState) => prevState.concat(str));
+  
+      return res;
+    },
+    myIncFunction(a, b) {
+      // eslint-disable-next-line no-useless-concat
+      let str = a + " " + "+" + "=" + " " + b;
+      let res = setCode((prevState) => prevState.concat(str));
+      return res;
+    },
+    myFuncFunction(a, b) {
+      // eslint-disable-next-line no-useless-concat
+      let str = "def" + " " + a + "(" + b + ")" + ":";
+  
+      return setCode((prevState) => prevState.concat(str));
+    },
+    myLoopFunction(a, b, c, d) {
+      let e;
+      if (c == "greater than") {
+        e = ">";
+      } else if (c == "less than") {
+        e = "<";
+      } else if (c == "equal equal to") {
+        e = "==";
+      } else if (c == "equal") {
+        e = "=";
+      }
+      let str = a + " " + b + e + d + ":";
+      let res = setCode((prevState) => prevState.concat(str));
+  
+      return res;
+    },
+    myVarFunction(a, b) {
+      let str = a + "=" + b;
+      let res = setCode((prevState) => prevState.concat(str));
+  
+      return res;
+    },
+    myPrintFunction(a) {
+      let str = 'print("' + a + '")';
+      let res = setCode((prevState) => prevState.concat(str));
+  
+      return res;
+    }
+  }))
+
+  function setDefaultLanguage(){
     localStorage.setItem("default-language", language);
     console.log(`${language} set as default!`);
-  };
-  
+  }
+  function inputChangeHandler(event) {
+    console.log("abs3", code);
+    
+    setCode(event.target.value);
+  }
+
   return (
     <div>
-      <Navbar hidden="hidden" ref={childFunc}></Navbar>
+      {/* <Navbar hidden="hidden" ref={childFunc}></Navbar> */}
       <section className="p-10 ">
         <h1 className="text-4xl sm:text-5xl flex justify-center p-5 font-exo">
           Compiler
@@ -267,7 +221,7 @@ function Tutorial() {
         <div className="my-2">
           <button
             className="text-lg border-2 border-red-600 rounded-xl bg-red-200 hover:bg-red-500 px-3 py-1"
-            onClick={handleSubmit}
+            onClick={submitHandler}
           >
             {/* onClick="handleSubmit"> */}
             Submit
@@ -279,9 +233,10 @@ function Tutorial() {
         >
           {output}
         </p>
+        
       </section>
     </div>
   );
-}
+})
 
 export default Tutorial;

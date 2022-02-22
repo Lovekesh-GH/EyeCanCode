@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require("cors");
+const path = require('path');
 const port = 5000 || process.env.PORT;
 const {generateFile} = require('./generateFile');
 const {executeCpp} = require("./executeCpp");
@@ -8,6 +9,8 @@ const {executeC} = require('./executeC');
 const { executeJava } = require('./executeJava');
 
 const app = express();
+const buildPath = path.join(__dirname, '..', 'build');
+app.use(express.static(buildPath));
 
 app.use(cors());
 app.use(express.urlencoded({extended: true}));
@@ -47,5 +50,5 @@ app.post("/run",async(req,res) =>{
 );
 
 app.listen(port,()=>{
-    console.log(`Listening on port 5000!`);
+    console.log(`Listening on port ${port}!`);
 });

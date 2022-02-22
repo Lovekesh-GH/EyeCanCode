@@ -139,8 +139,8 @@ question(
 // );
 intent('I am thrilled to start my coding career with this platform. Let’s discover the tutorial page.', 
        'open the tutorial page',p => {
-    p.play('opening the Tutorial page');
-    p.play({command:'goBack'});
+    p.play('opening the Panda page');
+    p.play({command:'goTutorial'});
     p.play('The tutorial page of our website provides a beginner-friendly voice-controlled interface where you can write your code. The python compiler is all set to fuel your programming journey.');
 });
 
@@ -151,12 +151,12 @@ const usin = context(() => {
 intent('So who are the contributors to this website?', 
        'open the about page',p => {
     p.play('Opening the about page');
-    p.play({command:'goForward'});
+    p.play({command:'goAbout'});
 });
 intent('what is there in the home page', 
        'open the home page',p => {
     p.play('Opening the home page');
-    p.play({command:'home'});
+    p.play({command:'goHome'});
 });
 // intent('Submit my code', p => {
 // //  p.play('your output came out to be 3 6');
