@@ -34,54 +34,54 @@ const Tutorial=React.forwardRef((props,ref)=> {
     }`)
   }, []);
 
-  async function submitHandler(){
-    console.log("abs1", code);
-      const payload = {
-        language,
-        code,
-      };
+  // async function submitHandler(){
+  //   console.log("abs1", code);
+  //     const payload = {
+  //       language,
+  //       code,
+  //     };
     
-      try {
-        console.log(payload);
-        const { data } = await axios.post("http://localhost:5000/run", payload);
+  //     try {
+  //       console.log(payload);
+  //       const { data } = await axios.post("http://localhost:5000/run", payload);
         
-        setOutput(data.output);
-        console.log("abs2", code);
-      } catch ({ response }) {
-        if (response) {
-          const errMsg = response.data.err.stderr;
-          setOutput(errMsg);
-        } else {
-          setOutput("Error Connecting to server");
-        }
-      }
-  }
-  // const submitHandler = async () => {
-  //   let postTokenoptions = {
-  //     method: "POST",
-  //     url: "https://judge0-ce.p.rapidapi.com/submissions",
-  //     params: { base64_encoded: "false", fields: "*", wait: true },
-  //     headers: {
-  //       "content-type": "application/json",
-  //       "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
-  //       "x-rapidapi-key": "078ccedceemsh7c7f7228a49c5b1p17ab36jsnaf56639a0967",
-  //     },
-  //     data: {
-  //       language_id: 71,
-  //       source_code: code,
-  //       // source_code: "print('Hello World')",
-  //       stdin: null,
-  //     },
-  //   };
+  //       setOutput(data.output);
+  //       console.log("abs2", code);
+  //     } catch ({ response }) {
+  //       if (response) {
+  //         const errMsg = response.data.err.stderr;
+  //         setOutput(errMsg);
+  //       } else {
+  //         setOutput("Error Connecting to server");
+  //       }
+  //     }
+  // }
+  const submitHandler = async () => {
+    let postTokenoptions = {
+      method: "POST",
+      url: "https://judge0-ce.p.rapidapi.com/submissions",
+      params: { base64_encoded: "false", fields: "*", wait: true },
+      headers: {
+        "content-type": "application/json",
+        "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+        "x-rapidapi-key": "078ccedceemsh7c7f7228a49c5b1p17ab36jsnaf56639a0967",
+      },
+      data: {
+        language_id: 71,
+        source_code: code,
+        // source_code: "print('Hello World')",
+        stdin: null,
+      },
+    };
 
-  //   try {
-  //     const response = await axios.request(postTokenoptions);
+    try {
+      const response = await axios.request(postTokenoptions);
 
-  //     setOutput(response.data.stdout);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+      setOutput(response.data.stdout);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   //  code for sending data 
    useDidMountEffect(() => {
