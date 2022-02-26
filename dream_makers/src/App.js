@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import alanBtn from "@alan-ai/alan-sdk-web";
 import Navbar from "./Navbar";
 import Home from "./Home";
