@@ -1,5 +1,5 @@
 # <span style="color:#fff; font-family: 'Bebas Neue'; font-size: 2em;">**EyeCanCode** </span>
-# <span style="color:#fff; font-family: 'Bebas Neue'; font-size: 1.4em;">**Electrothon 4.0** </span>
+<!-- # <span style="color:#fff; font-family: 'Bebas Neue'; font-size: 1.4em;">**Electrothon 4.0** </span> -->
 
 ##  💼 &nbsp; <span style="color: #f2cf4a; font-family: Babas; font-size: 1.4em;">**Tagline :**</span><span style="color:#fff; font-family: 'Bebas Neue'; font-size: 1.2em;">  From voice to vision
 </span>
@@ -8,9 +8,10 @@
  🛠 &nbsp;<span style="color: #f2cf4a; font-family: Babas; font-size: 1.4em;">Tech Stack
 </span>
 
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)&nbsp;
 ![CSS](https://img.shields.io/badge/alanai%20-%231572B6.svg?&style=for-the-badge&logo=alanai&logoColor=white)&nbsp;
+![NodeJS](https://img.shields.io/badge/Rapid_Api-6DA55F?style=for-the-badge&logo=Rapid-Api&logoColor=white)
 ![Javascipt](https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
