@@ -10,10 +10,10 @@ function About() {
           <h1 className="text-white text-4xl sm:text-5xl flex justify-center pb-5 font-exo">
             Meet Our Team
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="flex justify-center gap-10">
             {team.map((item, index) => {
               return (
-                <div key={item.id}>
+                <div key={item.id} className="w-1/5">
                   <div className="border border-gray-800 shadow-lg shadow-black">
                     <div className="container">
                       <div className="content-inner">
