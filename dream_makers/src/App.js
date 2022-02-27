@@ -10,6 +10,7 @@ function App() {
   const alanBtnInstance = useRef(null);
   const navbarFunc = useRef(null);
   const tutFunc = useRef(null);
+  const homeFunc = useRef(null);
 
   function navigationHandler(value) {
     if (navbarFunc.current) {
@@ -33,7 +34,9 @@ function App() {
             if (tutFunc.current) {
               tutFunc.current.myPrintFunction(response);
             }
-          } else if (commandData.command === "variable") {
+          } else if (commandData.command === "gotoFaq") {
+            homeFunc.current.childFuncHandler(commandData.faqId - 1);
+          }else if (commandData.command === "variable") {
             let one = commandData.vari;
             let two = commandData.No;
             console.log(one);
@@ -129,7 +132,7 @@ function sendData(output) {
         <Routes>
           <Route path="/Tutorial" element={<Tutorial ref={tutFunc} sendFunc={sendData}/>} />
           <Route path="/About" element={<About />} />
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home ref={homeFunc}/>} />
         </Routes>
       </div>
     </Router>

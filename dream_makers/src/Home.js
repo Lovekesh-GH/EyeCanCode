@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import Faq from "./Faq";
-import Navbar from './Navbar';
 
-function Home() {
+const Home=React.forwardRef((props,ref) => {
   const childFunc = useRef(null);
+
+  React.useImperativeHandle(ref,()=>({
+   childFuncHandler(value){
+     childFunc.current.toggleHandler(value);
+   }
+  }));
 
   return (
     <>
-    <Navbar hidden="hidden" ref={childFunc}></Navbar>
     <div className="bg-gray-900 text-black">
         <div className="grid grid-cols-1 md:grid-cols-3 items-center animation">
           <div className="col-span-2 grid items-center h-screen">
@@ -40,9 +44,9 @@ function Home() {
           </div>
         </div>
       </div>
-      <Faq />
+      <Faq ref={childFunc}/>
     </>
   );
-}
+})
 
 export default Home;

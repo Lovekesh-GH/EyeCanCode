@@ -1,21 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef} from "react";
 import { questions } from "./FaqApi";
-import Alan from "./Alan";
 
-function Faq() {
+const Faq=React.forwardRef((props,ref)=> {
   const [show, setShow] = useState(false);
-  const [alanvoice, setAlanVoice] = useState(null);
+  const revealRefs = useRef([]);
+  revealRefs.current = [];
+
+  React.useImperativeHandle(ref,()=>({
+    toggleHandler(value){
+      toggle(value);
+      console.log("scroll",revealRefs.current[value]);
+      if(revealRefs.current[value])
+      revealRefs.current[value].scrollIntoView({
+        behavior: 'smooth',
+      });
+    },
+  }))
 
   const toggle = (index) => {
     if (show === index) {
       return setShow(null);
     }
     setShow(index);
-  };
+  }
 
+ const addToRefs = (el) => {
+    if(el && !revealRefs.current.includes(el))
+      revealRefs.current.push(el);
+ }
   return (
     <div>
-      <section>
+      <section id="faq">
         <div className="border border-gray-400 rounded-xl py-5 my-10 lg:mx-20 mx-2">
           <p className="text-4xl sm:text-5xl flex justify-center pb-5 font-exo">
             General Questions
@@ -23,7 +38,7 @@ function Faq() {
 
           {questions.map((item, index) => {
             return (
-              <div key={item.id}>
+              <div key={item.id} ref={addToRefs}>
                 <div className="m-5 ">
                   <div className="flex justify-center">
                     <button
@@ -63,14 +78,8 @@ function Faq() {
           })}
         </div>
       </section>
-      {/* <Alan
-        alanvoice={alanvoice}
-        setAlanVoice={setAlanVoice}
-        toggle={toggle}
-        setShow={setShow}
-      /> */}
     </div>
   );
-}
+})
 
 export default Faq;
