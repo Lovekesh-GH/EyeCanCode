@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
 import axios from "axios";
 import React, { useState, useEffect,useRef } from "react";
@@ -7,7 +8,7 @@ const Tutorial=React.forwardRef((props,ref)=> {
   const [code, setCode] = useState(null);
   const [language, setLanguage] = useState("");
   const [output, setOutput] = useState("");
-//  custom hook to prevent useEffect;s initial render:
+//  custom hook to prevent useEffect's initial render:
   const useDidMountEffect = (func, deps) => {
     const didMount = useRef(false);
   
@@ -21,41 +22,16 @@ const Tutorial=React.forwardRef((props,ref)=> {
   };
 
   useEffect(() => {
+    if(!props.initCode)
     setCode(stubs[language]);
   }, [language]);
 
   useEffect(() => {
     const defaultLang = localStorage.getItem("default-language") || "c";
     setLanguage(defaultLang);
-    setCode(`#include <stdio.h>
-    int main() {
-      printf("Hello World!");
-      return 0;
-    }`)
+    setCode(`${props.initCode}`);
   }, []);
 
-  // async function submitHandler(){
-  //   console.log("abs1", code);
-  //     const payload = {
-  //       language,
-  //       code,
-  //     };
-    
-  //     try {
-  //       console.log(payload);
-  //       const { data } = await axios.post("http://localhost:5000/run", payload);
-        
-  //       setOutput(data.output);
-  //       console.log("abs2", code);
-  //     } catch ({ response }) {
-  //       if (response) {
-  //         const errMsg = response.data.err.stderr;
-  //         setOutput(errMsg);
-  //       } else {
-  //         setOutput("Error Connecting to server");
-  //       }
-  //     }
-  // }
   const submitHandler = async () => {
     let postTokenoptions = {
       method: "POST",
@@ -206,7 +182,6 @@ const Tutorial=React.forwardRef((props,ref)=> {
 
   return (
     <div>
-      {/* <Navbar hidden="hidden" ref={childFunc}></Navbar> */}
       <section className="p-10 ">
         <h1 className="text-4xl sm:text-5xl flex justify-center p-5 font-exo">
           Compiler
@@ -248,18 +223,14 @@ const Tutorial=React.forwardRef((props,ref)=> {
         <div className="my-2">
           <button
             className="text-lg border-2 border-red-600 rounded-xl bg-red-200 hover:bg-red-500 px-3 py-1"
-            onClick={submitHandler}
-          >
-            {/* onClick="handleSubmit"> */}
+            onClick={submitHandler}>
             Submit
           </button>
         </div>
         <textarea
           className="border-2 border-gray-200 h-36 lg:w-[50vw] w-full rounded-xl p-2"
           placeholder="Output"
-          value={output}
-         
-        >
+          value={output}>
           
  </textarea>
         

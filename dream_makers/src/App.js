@@ -5,6 +5,8 @@ import Navbar from "./Navbar";
 import Home from "./Home";
 import Tutorial from "./Tutorial";
 import About from "./About";
+import Questions from './Questions';
+import CodingTemplate from './CodingTemplate';
 
 function App() {
   const alanBtnInstance = useRef(null);
@@ -106,7 +108,6 @@ function App() {
             //  mySubmitFunction();
             if (tutFunc.current) {
               tutFunc.current.handleSubmit();
-              sendData();
             }
           }
         },
@@ -130,8 +131,11 @@ function sendData(output) {
       <div className="">
         <Navbar ref={navbarFunc}/>
         <Routes>
-          <Route path="/Tutorial" element={<Tutorial ref={tutFunc} sendFunc={sendData}/>} />
+          <Route path="/Tutorial" element={<Tutorial ref={tutFunc} sendFunc={sendData} 
+            initCode={`print("Hello world!")`} />} />
           <Route path="/About" element={<About />} />
+          <Route exact path="/Questions" element={<Questions />} />
+          <Route path="/Questions/*" element={<CodingTemplate ref={tutFunc} sendData={sendData}/>} />
           <Route exact path="/" element={<Home ref={homeFunc}/>} />
         </Routes>
       </div>

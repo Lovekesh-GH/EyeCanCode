@@ -1,5 +1,5 @@
 import React from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Navbar = React.forwardRef((props,ref) => {
@@ -22,6 +22,9 @@ const Navbar = React.forwardRef((props,ref) => {
           </li>
           <li className="cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-1 transform transition duration-200 hover:scale-105">
             <Link to="/About">About</Link>
+          </li>
+          <li className="cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-1 transform transition duration-200 hover:scale-105">
+            <Link to="/Questions">Questions</Link>
           </li>
         </ul>
       </nav>
