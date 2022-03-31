@@ -100,7 +100,9 @@ function App() {
             navigationHandler("/Tutorial");
           } else if(commandData.command === "goHome"){
             navigationHandler("/");
-          }else if (commandData.command === "clear") {
+          } else if(commandData.command === "goQuestions"){
+          navigationHandler("/Questions");
+         }  else if (commandData.command === "clear") {
             if (tutFunc.current) {
               tutFunc.current.myCleatFunction();
             }

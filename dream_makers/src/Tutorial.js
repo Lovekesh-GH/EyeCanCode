@@ -27,8 +27,6 @@ const Tutorial=React.forwardRef((props,ref)=> {
   }, [language]);
 
   useEffect(() => {
-    const defaultLang = localStorage.getItem("default-language") || "c";
-    setLanguage(defaultLang);
     setCode(`${props.initCode}`);
   }, []);
 
@@ -52,7 +50,6 @@ const Tutorial=React.forwardRef((props,ref)=> {
 
     try {
       const response = await axios.request(postTokenoptions);
-
       setOutput(response.data.stdout);
     } catch (err) {
       console.log(err);
@@ -170,10 +167,6 @@ const Tutorial=React.forwardRef((props,ref)=> {
     }
   }))
 
-  function setDefaultLanguage(){
-    localStorage.setItem("default-language", language);
-    console.log(`${language} set as default!`);
-  }
   function inputChangeHandler(event) {
     console.log("abs3", code);
     
@@ -186,34 +179,6 @@ const Tutorial=React.forwardRef((props,ref)=> {
         <h1 className="text-4xl sm:text-5xl flex justify-center p-5 font-exo">
           Compiler
         </h1>
-        <div className="flex gap-5 mb-5 h-10">
-          <label className="text-lg font-bold">Language: </label>
-          <select
-            value={language}
-            className="text-lg border-2 border-gray-600 rounded-xl bg-gray-200 hover:bg-gray-300 px-3 py-1"
-            onChange={(e) => {
-              const shouldSwitch = window.confirm(
-                "Do you want to change the language? WARNING: Your current code will be lost."
-              );
-              if (shouldSwitch) {
-                setLanguage(e.target.value);
-              }
-            }}
-          >
-            <option value="c">C</option>
-            <option value="cpp">C++</option>
-            <option value="java">Java</option>
-            <option value="py">Python</option>
-          </select>
-
-          <button
-            className="text-lg border-2 border-cyan-600 rounded-xl bg-cyan-200 hover:bg-cyan-500 px-3 py-1"
-            onClick={setDefaultLanguage}
-          >
-            Set Default
-          </button>
-        </div>
-
         <textarea
           rows="20"
           value={code}
@@ -231,7 +196,6 @@ const Tutorial=React.forwardRef((props,ref)=> {
           className="border-2 border-gray-200 h-36 lg:w-[50vw] w-full rounded-xl p-2"
           placeholder="Output"
           value={output}>
-          
  </textarea>
         
       </section>

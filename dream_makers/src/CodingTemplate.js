@@ -72,8 +72,9 @@ const Template =React.forwardRef((props,ref)=>{
     return(
         <div className='p-10'>
             <div className='flex'>
-                <div className='flex-1 flex '>
-                    <h2 className='py-20 text-2xl'>{question.ques}</h2>
+                <div className='flex-1 flex-col'>
+                    <h1 className='py-20 text-4xl'>{question.ques}</h1>
+                    <h4 className='py-5 text-xl'>{question.desc}</h4>
                 </div>
                 <div>
                     <Tutorial ref={tutFunc} sendFunc={props.sendData} initCode={answer.ans}/>
